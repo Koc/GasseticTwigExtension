@@ -2,15 +2,17 @@
 
 namespace Gassetic;
 
+use Symfony\Component\Yaml\Yaml;
+
 class Metadata
 {
     private $files = array();
 
     private $env;
 
-    public static function fromJsonFile($path, $env)
+    public static function fromYamlFile($path, $env)
     {
-        $json = json_decode(file_get_contents($path), true);
+        $json = Yaml::parse(file_get_contents($path));
 
         return new static($json, $env);
     }

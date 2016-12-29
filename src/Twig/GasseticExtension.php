@@ -26,9 +26,9 @@ class GasseticExtension extends \Twig_Extension
         $files = array();
 
         foreach ($names as $name) {
-            $files = array_merge($files, $this->metadata->getFile($names));
+            $files[] = $this->metadata->getFile($name);
         }
 
-        return $files;
+        return call_user_func_array('array_merge', $files);
     }
 }

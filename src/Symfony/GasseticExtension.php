@@ -13,14 +13,14 @@ class GasseticExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = $this->getConfiguration();
+        $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
 
         $metadataFactoryDef = new Definition(Metadata::class);
         $container->setDefinition('gassetic.metadata_factory', $metadataFactoryDef);
 
         $metadataDef = new Definition(Metadata::class, array($config['metadata_file'], $config['environment']));
-        $metadataDef->setFactory(array($metadataFactoryDef, 'fromJsonFile'));
+        $metadataDef->setFactory(array($metadataFactoryDef, 'fromYamlFile'));
         $container->setDefinition('gassetic.metadata', $metadataDef);
 
         $container->setDefinition(

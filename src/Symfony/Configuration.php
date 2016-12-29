@@ -25,7 +25,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('environment')->defaultValue($this->debug ? 'dev' : 'prod')->cannotBeEmpty()->end()
-                ->scalarNode('metadata_file')->defaultValue('var/gassetic_metadata.json')->cannotBeEmpty()->end()
+                ->scalarNode('metadata_file')->defaultValue('var/gassetic_metadata.yml')->cannotBeEmpty()->end()
             ->end();
 
         return $treeBuilder;
