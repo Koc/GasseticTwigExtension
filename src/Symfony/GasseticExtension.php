@@ -25,7 +25,7 @@ class GasseticExtension extends Extension
 
         $container->setDefinition(
             'gassetic.twig_extension',
-            new Definition(TwigExtension::class, array(new Reference('gassetic.metadata')))
+            (new Definition(TwigExtension::class, array(new Reference('gassetic.metadata'))))->addTag('twig.extension')
         );
     }
 

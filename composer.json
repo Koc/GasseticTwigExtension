@@ -36,7 +36,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Gassetic\\Bridge\\": "src"
+            "Gassetic\\Bridge\\": "src",
+            "Gassetic\\": "src"
         }
     },
     "autoload-dev": {
