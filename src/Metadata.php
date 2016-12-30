@@ -12,12 +12,12 @@ class Metadata
 
     public static function fromYamlFile($path, $env)
     {
-        $json = Yaml::parse(file_get_contents($path));
+        $yaml = Yaml::parse(file_get_contents($path));
 
-        return new static($json, $env);
+        return new static($yaml, $env);
     }
 
-    public function __construct(array $files, $env)
+    public function __construct(array $files = [], $env = 'dev')
     {
         $this->files = $files;
         $this->env = $env;
@@ -30,10 +30,12 @@ class Metadata
      */
     public function getFile($name)
     {
-        if (!isset($this->files[$name])) {
-            throw new \InvalidArgumentException(sprintf('File "%s" not defined in metadata.', $name));
+        foreach ($this->files as $mimetype) {
+            if (isset($mimetype['files'][$name])) {
+                return $mimetype['files'][$name];
+            }
         }
 
-        return $this->files[$name][$this->env];
+        throw new \InvalidArgumentException(sprintf('File "%s" not defined in metadata.', $name));
     }
 }
