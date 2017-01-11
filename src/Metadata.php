@@ -12,7 +12,13 @@ class Metadata
 
     public static function fromYamlFile($path, $env)
     {
-        $yaml = Yaml::parse(file_get_contents($path));
+        if (file_exists($path)) {
+            $yaml = Yaml::parse(file_get_contents($path));
+        } else {
+            // If gassetic has not run yet, the file might not exist.
+            // This would be ok in dev, not in prod
+            $yaml = [];
+        }
 
         return new static($yaml, $env);
     }
@@ -36,6 +42,6 @@ class Metadata
             }
         }
 
-        throw new \InvalidArgumentException(sprintf('File "%s" not defined in metadata.', $name));
+        throw new \InvalidArgumentException(sprintf('File "%s" not defined in metadata. Please (re-)run gassetic and check configs and view template assets are ok', $name));
     }
 }
